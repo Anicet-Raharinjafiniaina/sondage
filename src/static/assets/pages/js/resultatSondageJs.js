@@ -5,7 +5,7 @@ $('#listSondage').on('change', function () {
   $('#stop_voting').show()
   var sondage = $('#listSondage').val()
   $.ajax({
-    url: '/opinon/get_info_detail/',
+    url: '/vote/get_info_detail/',
     method: 'POST',
     data: {
       'id': sondage
@@ -32,7 +32,7 @@ $('#listSondage').on('change', function () {
           var valActif = 0
         }
         $.ajax({
-          url: '/opinon/update_status/',
+          url: '/vote/update_status/',
           method: 'POST',
           data: {
             'id': sondage,
@@ -143,7 +143,7 @@ function dataForTable (arrTitreId, arrDetailVote) {
   $.each(arrDetailVote, function (i, objet) {
     newRow += ('<tr><td class="text-center bg-transparent">' + objet.nom + '</td>')
     for (let index = 0; index < arrTitreId.length; index++) {
-      if (objet.opinon_detail_id == arrTitreId[index]) {
+      if (objet.vote_detail_id == arrTitreId[index]) {
         newRow += '<td class="text-center text-green fontawesome-ok"><span class="fa-fw select-all fas"></span></td>'
       } else {
         newRow += ('<td class="text-center"></td>')

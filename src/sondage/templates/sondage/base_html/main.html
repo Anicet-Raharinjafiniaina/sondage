@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    {% include "sondage/base_html/header.html" %}
+  </head>
+
+  <body>
+    <div id="app">
+      {% include "sondage/base_html/navbar.html" %}
+      <div id="main">
+        {% block content %} {% endblock %}
+        <br />
+        {% include "sondage/base_html/footer.html" %}
+      </div>
+    </div>
+    {% include "sondage/base_html/script.html" %}
+    <br />
+    {% block script_js %} {% endblock %}
+  </body>
+</html>

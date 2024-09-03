@@ -1,0 +1,44 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+      <title>Authentification</title>
+      <link rel="stylesheet" href="{% static 'assets/css/pages/login.css' %}" />
+</head>
+
+<body>
+      <div id="login_form" class="main">
+            <h1>Bienvenue</h1>
+            <form action="">
+                  <label for="username">
+                        Login :
+                  </label>
+                  <input type="text" 
+                         id="username" 
+                         name="username" 
+                         placeholder="Votre login" required>
+
+                  <label for="password">
+                        Mot de passe :
+                  </label>
+                  <input type="password"
+                         id="password" 
+                         name="password"
+                         placeholder="Votre mot de passe" required>
+                   <br>
+                  <span id="content-error" class="text-red"> </span>
+                  <div class="wrap">
+                        <button id="btn-login" type="button"
+                                onclick="send_user_infos()">
+                              Se connecter
+                        </button>
+                  </div>
+            </form>
+      </div>
+
+        <script src="{% static 'assets/js/jquery-3.6.0.js' %}"></script>
+        <script src="{% static 'assets/pages/js/userAuth.js' %}"></script>
+</body>
+</html>

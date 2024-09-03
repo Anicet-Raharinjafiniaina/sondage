@@ -1,0 +1,48 @@
+{% extends 'sondage/base_html/main.html' %} {% block content %}
+
+<div class="page-heading">
+    <h5>Liste des sondages </h5>
+</div>
+<div class="page-content">
+    <section class="row">
+        <div class="card">
+            <div id="titre_voirSondage class=" card-header"> 
+            </div>
+            <div class="card-body">
+                    <table class="table table-striped table-bordered" id="table1">
+                        <thead>
+                            <tr>                                
+                                <th class='text-center'>Actif</th>
+                                <th class='text-center'>ID</th>
+                                <th class='text-center'>Titre</th>
+                                <th class='text-center'>Nombre de choix</th>
+                                <th class='text-center'>Lien</th>
+                                <th class='text-center'>Créé par</th>
+                                <th class='text-center'>Créé le</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                      
+                      {% for vote_detail in votes %}    
+                                <tr>                    
+                                {% if vote_detail.vote.actif %} 
+                                    <td class='text-center'><span class="fa-fw select-all fas"></span></td>
+                                {% else %}
+                                    <td class='text-center'><span class="fa"></span></td>
+                                {% endif %}
+                                    <td class='text-center'>{{vote_detail.vote.id}}</td>
+                                    <td class='text-center'>{{vote_detail.vote.titre}}</td>
+                                    <td class='text-center'>{{vote_detail.nombre}}</td>
+                                    <td> <a href="{% url 'sondage_view_opinion' vote_detail.vote.id %} ">{% url 'sondage_view_opinion' vote_detail.vote.id %}</a></td>
+                                    <td class='text-center'>{{vote_detail.vote.cree_par}}</td>
+                                    <td class='text-center'>{{vote_detail.vote.date_creation}}</td>
+                                </tr>
+                     {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

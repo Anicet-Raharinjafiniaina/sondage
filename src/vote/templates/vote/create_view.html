@@ -1,0 +1,110 @@
+{% extends 'sondage/base_html/main.html' %} {% block content %}
+
+<div class="page-heading">
+  <h5>Créer un sondage</h5>
+</div>
+<div class="page-content">
+  <section class="row">
+    <div class="card">
+      <div id="titre_creation" class="card-header">
+        <fieldset class="form-group">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="anonyme"
+            />Sondage anonyme
+          </div>
+        </fieldset>
+      </div>
+      <div class="card-body">
+        <p id="lien"></p>
+        <p id="refresh"></p>
+        <form class="form" name="add_name" id="form" data-parsley-validate>
+          <input
+            type="text"
+            name="titre"
+            id="titre"
+            placeholder="Titre *"
+            class="form-control"
+            data-parsley-required="true"
+          /><br />
+          <textarea
+            name="commentaire"
+            placeholder="commentaire"
+            rows="3"
+            class="form-control"
+          ></textarea
+          ><br />
+          <fieldset class="form-group">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="check" />Type
+              de champs en date
+            </div>
+          </fieldset>
+          <button
+            type="button"
+            id="add"
+            name="add"
+            class="btn btn-sucess btn-sm"
+          >
+            Ajouter un autre choix</button
+          ><br />
+          <i
+            ><span
+              id="nbColonne"
+              style="font-size: 10px; padding-left: 10px"
+            ></span
+          ></i>
+          <table class="table table-borderless" id="dynamic_field">
+            <tr>
+              <td class="input-group-text">
+                <input
+                  type="text"
+                  name="colonne1"
+                  placeholder="choix 1 *"
+                  class="form-control colonne_list"
+                  data-parsley-required="true"
+                />
+                <input
+                  type="text"
+                  name="plus1"
+                  placeholder="plus de précision"
+                  id="other"
+                  class="form-control plus"
+                />
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="input-group-text">
+                <input
+                  type="text"
+                  name="colonne2"
+                  placeholder="choix 2 *"
+                  class="form-control colonne_list"
+                  data-parsley-required="true"
+                /><input
+                  type="text"
+                  name="plus2"
+                  placeholder="plus de précision"
+                  id="other"
+                  class="form-control plus"
+                />
+              </td>
+              <td></td>
+            </tr>
+          </table>
+          <input
+            type="submit"
+            name="submit"
+            class="btn btn-success"
+            id="save"
+            value="Enregistrer"
+          />
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}

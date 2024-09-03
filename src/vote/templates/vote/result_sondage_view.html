@@ -1,0 +1,199 @@
+{% extends 'sondage/base_html/main.html' %} {% block content %}
+
+<style>
+  .fontawesome-icons {
+    text-align: center;
+  }
+
+  article dl {
+    background-color: rgba(0, 0, 0, 0.02);
+    padding: 20px;
+  }
+
+  .fontawesome-icons .the-icon {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+</style>
+
+<div class="page-heading">
+  {% comment %} <h5>vote</h5> {% endcomment %}
+</div>
+<div class="page-content">
+  <section class="row">
+    <div class="col-12 col-lg-12">
+      <div class="row mx-auto">
+        <div class="col-6 col-lg-3 col-md-6">
+          <div class="card">
+            <div class="card-body px-4 py-4-5">
+              <div class="row">
+                <div
+                  class="col-md-3 col-lg-6 col-xl-6 col-xxl-3 d-flex justify-content-start"
+                >
+                  <div class="stats-icon purple mb-2">
+                    <i class="iconly-boldShow"></i>
+                  </div>
+                </div>
+                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-9">
+                  <h6 class="text-muted font-semibold">Liste des votes</h6>
+                  <h6 class="font-extrabold mb-0">
+                    <select
+                      class="form-control"
+                      data-live-search="true"
+                      placeholder="Séléctionner un sondage"
+                      name="listSondage"
+                      id="listSondage"
+                    >
+                      <option></option>
+
+                      {% for detail in list_sondage %}
+                      <option value="{{detail.id}}">
+                        {{detail.id}} - {{detail.titre}}
+                      </option>
+                      {% endfor %}
+                    </select>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3 col-md-6">
+          <div class="card">
+            <div class="card-body px-4 py-4-5">
+              <div class="row mx-auto">
+                <div
+                  class="col-md-3 col-lg-6 col-xl-6 col-xxl-3 d-flex justify-content-start"
+                >
+                  <div class="stats-icon purple mb-2">
+                    <span class="mx-auto"
+                      ><i class="bi bi-arrow-left-right"></i
+                    ></span>
+                  </div>
+                </div>
+                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                  <h6 class="text-muted font-semibold">Activer / Désactiver</h6>
+                  <div id="stop_voting">
+                    <div
+                      class="theme-toggle d-flex gap-2 align-items-center mt-2"
+                      id="stop_voting"
+                    >
+                      <span class="fa" style="margin-bottom: 10px"></span
+                      >&ensp; &ensp;
+                      <fieldset class="form-group">
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="actif"
+                          />
+                        </div>
+                      </fieldset>
+                      &ensp; &ensp;
+                      <span
+                        class="fa-fw select-all fas"
+                        style="margin-bottom: 10px"
+                        ></span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3 col-md-6">
+          <div class="card">
+            <div class="card-body px-4 py-4-5">
+              <div class="row">
+                <div
+                  class="col-md-3 col-lg-6 col-xl-6 col-xxl-3 d-flex justify-content-start"
+                >
+                  <div class="stats-icon purple mb-2">
+                    <span class="mx-auto"
+                      ><i class="bi bi-people-fill"></i
+                    ></span>
+                  </div>
+                </div>
+                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                  <h6 class="text-muted font-semibold">
+                    Nombre de personnes qui ont voté
+                  </h6>
+                  <h6 class="font-extrabold mb-0">
+                    <span id="nb_vote"></span>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-lg-3 col-md-6">
+          <div class="card">
+            <div class="card-body px-4 py-4-5">
+              <div class="row">
+                <div
+                  class="col-md-3 col-lg-6 col-xl-6 col-xxl-3 d-flex justify-content-start"
+                >
+                  <div class="stats-icon purple mb-2">
+                    <span class="mx-auto"> <i class="bi bi-graph-up"></i></span>
+                  </div>
+                </div>
+                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                  <h6 class="text-muted font-semibold">
+                    Nombre total de sondages
+                  </h6>
+                  <h6 class="font-extrabold mb-0" id="nb_total"></h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h6><span id="titre_sondage"></span></h6>
+            </div>
+            <div class="card-body">
+              <table width="auto">
+                <tbody>
+                  <tr>
+                    <td class="text-center">
+                      <div
+                        id="chartBar"
+                        style="width: 100%; max-width: 600px"
+                      ></div>
+                    </td>
+                    <td class="text-center">
+                      <div
+                        id="chartPie"
+                        style="width: 100%; max-width: 700px"
+                      ></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="card" id="detail">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <table
+          class="table table-striped table-bordered"
+          id="tbl_result"
+        ></table>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% endblock content %}

@@ -6,15 +6,15 @@ $(document).ready(function () {
   } else {
     localStorage.setItem(pageKey, 'true') // Sinon, marquez la page comme visitée
 */
-  $('#lien_sondage').html('Lien du sondage : <a href= ' + window.location.href + '>' + window.location.href + '<a>')
+  $('#lien_vote').html('Lien du vote : <a href= ' + window.location.href + '>' + window.location.href + '<a>')
   // var url_params = new URLSearchParams(window.location.search)
 
-  $('#save_sondage').click(function () {
+  $('#save_vote').click(function () {
     if (($('.radio_button').is(':checked')) || ($('#name').val() != '')) {
       // var currentUrl = window.location.href
       // var match = currentUrl.match(/\/(\d+)\/$/)
       $.ajax({
-        url: '/opinon/save_choice/',
+        url: '/vote/save_choice/',
         method: 'POST',
         data: {
           'choice': $.trim($('input[type=radio]:checked').val()),

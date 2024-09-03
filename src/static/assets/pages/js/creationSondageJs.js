@@ -57,12 +57,12 @@ $('#save').click(function () {
     }]
     formData = dataInForm.concat(dataAnonyme)
     $.ajax({
-      url: '/opinon/save_sondage/',
+      url: '/vote/save_sondage/',
       method: 'POST',
       data: formData,
       success: function (id) {
         $('#form').hide()
-        $('#lien').html("<a href='/opinon/show_sondage/" + encodeURIComponent(id) + "' > Afficher le sondage que vous venez de créer </a> ")
+        $('#lien').html("<a href='/vote/show_sondage/" + encodeURIComponent(id) + "' > Afficher le sondage que vous venez de créer </a> ")
         $('#refresh').html('<button type="button " class="btn btn-sucess btn-sm" onclick="reloadPage()">Créer un autre sondage</button>')
         $('#titre_creation').text('')
       }
