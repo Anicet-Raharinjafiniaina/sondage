@@ -6,7 +6,7 @@ $(document).ready(function () {
     } else {
       localStorage.setItem(pageKey, 'true') // Sinon, marquez la page comme visitée
   */
-    $('#lien').html('Lien du vote : <a href= ' + window.location.href + '>' + window.location.href + '<a>')
+    $('#lien').html('Lien du sondage : <a href= ' + window.location.href + '>' + window.location.href + '<a>')
     // var url_params = new URLSearchParams(window.location.search)
   
     $('#save_reponse').click(function () {

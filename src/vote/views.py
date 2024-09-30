@@ -33,13 +33,11 @@ def save_sondage(request):
                     plus_value = data.get(f'plus{key[-1]}', '')
                     VoteDetail.objects.create(
                         colonne=colonne_value, plus=plus_value, vote=data_vote)
-
+                    
+            return JsonResponse(data_vote.id, safe=False, status=200)
         except Exception as e:
             transaction.set_rollback(True)
             return JsonResponse({'message': str(e)}, status=400)
-    else:
-        return JsonResponse(data_vote.id, safe=False)
-
 
 def show_sondage(request, id):
     try:
@@ -94,6 +92,7 @@ def save_choice(request):
             data_chosen.save()
             return JsonResponse({'message': 'Success'}, status=200)
         except Exception as e:
+            transaction.set_rollback(True)
             return JsonResponse({'message': str(e)}, status=400)
 
 
@@ -154,6 +153,7 @@ def update_status(request):
             Vote.objects.filter(id=vote_id).update(actif=val_status)
             return JsonResponse({'message': 'success'}, status=200)
         except Exception as e:
+            transaction.set_rollback(True)
             return JsonResponse({'message': str(e)}, status=400)
 
 

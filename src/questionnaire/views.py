@@ -38,8 +38,9 @@ def save_sondage(request):
                     )
                     data_detail.save()
 
-            return JsonResponse({'message': 'Success'}, status=200)
+            return JsonResponse(data.id, safe=False, status=200)
         except Exception as e:
+            transaction.set_rollback(True)
             return JsonResponse({'message': 'Erreur'}, status=400)
 
 def list_sondage(request):
@@ -55,7 +56,6 @@ def list_sondage(request):
             questionnaire_with_count.append(data)  
         return render(request, 'questionnaire/list_view.html', {"data_questionnaire" : questionnaire_with_count})
     except Exception as e:
-        print ("erreur ",e)
         return render(request, 'sondage/error/not_found.html')
     
             
@@ -91,6 +91,7 @@ def save_response(request):
             data_reponse.save()
         return JsonResponse({'message': 'Success'}, status=200)    
     except Exception as e:
+        transaction.set_rollback(True)
         raise e
 
 @csrf_exempt   
@@ -170,4 +171,5 @@ def update_status(request):
             Questionnaire.objects.filter(id=data.get("id")).update(actif=data.get("actif"))
             return JsonResponse({'message': 'success'}, status=200)
         except Exception as e:
+            transaction.set_rollback(True)
             return JsonResponse({'message': str(e)}, status=400)      
