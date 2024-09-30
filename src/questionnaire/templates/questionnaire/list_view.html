@@ -1,0 +1,44 @@
+{% extends 'sondage/base_html/main.html' %} {% block content %}
+<div class="page-heading">
+    <h5>Liste des formulaires</h5>
+</div>
+<div class="page-content">
+    <section class="row">
+        <div class="card">
+            <div id="titre_voirSondage class=" card-header">
+            </div>
+            <div class="card-body">
+                    <table class="table table-striped text-center table-bordered" id="table1">
+                        <thead>
+                            <tr>
+                                <th>Actif</th>
+                                <th>ID</th>
+                                <th>titre</th>
+                                <th>Nombre de questions</th>
+                                <th>Lien</th>
+                                <th>Créé par</th>
+                                <th>Créé le</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for detail in data_questionnaire %}                               
+                                {% if detail.questionnaires.actif == 1 %}
+                                    <tr><td><span class="fa-fw select-all fas"></span></td>
+                                {% else %}
+                                    <tr><td><span class="fa"></span></td>                                
+                                {% endif %}                                  
+                                <td>{{detail.questionnaires.id}}</td>
+                                <td>{{detail.questionnaires.titre}}</td>
+                                <td>{{ detail.nombre }}</td>                                                 
+                                <td> <a href="{% url 'sondage_view_questionnaire' detail.questionnaires.id %} ">{% url 'sondage_view_questionnaire' detail.questionnaires.id %}</a></td>
+                                <td>{{detail.questionnaires.cree_par}}</td>
+                                <td>{{detail.questionnaires.date_creation}}</td>
+                            </tr>
+                        {% endfor %} 
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@
 <div id="sidebar" class="active">
   <div class="sidebar-wrapper active">
     {% if request.session.s_username and request.session.s_username != 'non reconnu' and request.session.s_username != "" %}
-      <div class="text-center mt-3">Bienvenue, {{ request.session.s_username }} |   <a href="{% url 'logout_view' %}">Déconnexion</a> </div>
+      <div class="text-center mt-3">Bienvenue {{ request.session.s_username }} |   <a href="{% url 'logout_view' %}">Déconnexion</a> </div>
     {% endif %}
     <div class="sidebar-header position-relative">
       <div class="d-flex justify-content-between align-items-center">
@@ -95,7 +95,7 @@
               <a href="{% url 'result_sondage' %}">Vote</a>
             </li>
             <li class="submenu-item">
-              <a href="">Questionnaire</a>
+              <a href="{% url 'get_all_questionnaire' %}">Questionnaire</a>
             </li>
           </ul>
         </li>
@@ -110,7 +110,7 @@
               <a href="{% url 'create_view_opinion' %}">Vote</a>
             </li>
             <li class="submenu-item">
-              <a href="">Questionnaire</a>
+              <a href="{% url 'create_view_questionnaire' %}">Questionnaire</a>
             </li>
           </ul>
         </li>
@@ -125,7 +125,7 @@
               <a href="{% url 'list_view_opinion' %}">Vote</a>
             </li>
             <li class="submenu-item">
-              <a href="">Questionnaire</a>
+              <a href="{% url 'list_view_questionnaire' %}">Questionnaire</a>
             </li>
           </ul>
         </li>

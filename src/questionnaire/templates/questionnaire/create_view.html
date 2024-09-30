@@ -1,0 +1,38 @@
+{% extends 'sondage/base_html/main.html' %} {% block content %}
+
+<div class="page-heading">
+    <h5 id="titre_page">Créer un formulaire de questionnaire</h5>
+</div>
+<div class="page-content">
+    <section class="row">
+        <div class="card">
+            <div class="card-body">
+                <p id="lien_questionnaire"></p>
+                <p id="refresh"></p>
+                <form class="form" name="add_name" id="form" data-parsley-validate>
+                    <input type="text" name="titre" id="titre" placeholder="Titre *" class="form-control" data-parsley-required="true"><br>
+                    <textarea name="commentaire" placeholder="commentaire" rows="3" id="commentaire" class="form-control"></textarea><br>
+                    <button type="button" id="add_question" name="add_question" class="btn btn-sucess btn-sm">Ajouter une autre question</button><br>
+                    <i><span id="nbColonne" style="font-size: 10px; padding-left:10px"></span></i>
+                    <table class="table table-borderless" id="dynamic_field">
+                        <tr>
+                            <td class="input-group-text"><input type="text" id="question1" name="question1" placeholder="question 1 *" class="form-control questionnaire_list" data-parsley-required="true" /></td>
+                            <td>
+                                    <div class="theme-toggle d-flex gap-2 align-items-center mt-2" style="margin-left:20px;"id="obligatoire">
+                                      <fieldset class="form-group">
+                                        <div class="form-check form-switch">
+                                          <input class="form-check-input" type="checkbox" id="obligatoire1"  name="obligatoire1" / value="0"> <span> obligatoire </span>
+                                        </div>
+                                      </fieldset>                                     
+                                    </div>
+                              
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="button" name="submit" class="btn btn-success" id="save_questionnaire" value="Enregistrer">
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

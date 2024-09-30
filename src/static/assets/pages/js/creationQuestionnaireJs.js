@@ -5,9 +5,9 @@ $('#question1').val('')
 $('#question2').val('')
 
 $('.questionnaire_list').attr('data-parsley-required="true"')
-$('#add').click(function () {
+$('#add_question').click(function () {
   i++
-  $('#dynamic_field').append('<tr id="row' + i + '"><td class="input-group-text"><input type="text" name="question' + i + '"  class="form-control questionnaire_list" placeholder="question ' + i + ' *" ' + req + '/></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">x</button></td></tr>')
+  $('#dynamic_field').append('<tr id="row' + i + '"><td class="input-group-text"><input type="text" id="question' + i + '" name="question' + i + '"  class="form-control questionnaire_list" data-parsley-required="true" placeholder="question ' + i + ' *" ' + req + '/></td><td>  <div class="theme-toggle d-flex gap-2 align-items-center mt-2" style="margin-left:20px;"id="obligatoire"> <fieldset class="form-group"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" name="obligatoire'+ i +'" id="obligatoire'+ i +'" value="0"/> <span> obligatoire </span> </div> </fieldset></div></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">x</button></td></tr>')
 })
 
 $(document).on('click', '.btn_remove', function () {
@@ -19,27 +19,34 @@ function reloadPage () {
   location.reload(true)
 }
 
-$('#save').click(function () {
-  // event.preventDefault()
-  if ($('#titre').val() != '' && $("input[name='question1']").val() != '') {
-    var dataInForm = $('#form').serializeArray()
-    var anonyme = $('#anonyme').is(':checked')
-    var dataAnonyme = [{
-      name: 'anonyme',
-      value: anonyme
-    }]
-    formData = dataInForm.concat(dataAnonyme)
+function checkValue(id) {
+  for (let index = 1; index < 100; index++) {
+    let element = document.getElementById(id + index);
+    if (element && element.value == "") {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+$('#save_questionnaire').click(function () {
+  $('#save_questionnaire').attr('disabled', true)
+  if ($('#titre').val() != '' && checkValue('question')) {
+    var formData = $('#form').serializeArray()
     $.ajax({
-      url: '../Home/saveQuestionnaire',
+      url: '/questionnaire/save_sondage/',
       method: 'POST',
       data: formData,
       success: function (id) {
         $('#form').hide()
-        $('#lien').html("<a href='../Home/showQuestionnaireLink?id=" + encodeURIComponent(id) + "' > Afficher le formulaire que vous venez de créer </a> ")
+        $('#titre_page').text("Création questionnaire faite.") 
+        $('#lien_questionnaire').html("<a href='/questionnaire/show_sondage/" + encodeURIComponent(id) + "' > Afficher le formulaire que vous venez de créer </a> ")
         $('#refresh').html('<button type="button " class="btn btn-sucess btn-sm" onclick="reloadPage()">Créer un autre formulaire</button>')
         $('#titre_creation').text('')
+        $('#save_questionnaire').attr('disabled', false)
       },
-      error: function (xhr, status, error) {
+      error: function (xhr, status, error) {        
         swal({
           title: 'Erreur',
           text: 'Erreur dans la base de données. Merci de réessayer plus tard.',
@@ -47,6 +54,7 @@ $('#save').click(function () {
           timer: 3000,
           showConfirmButton: false
         })
+        $('#save_questionnaire').attr('disabled', false)
       }
     })
   } else {
@@ -57,5 +65,6 @@ $('#save').click(function () {
       timer: 3000,
       showConfirmButton: false
     })
+    $('#save_questionnaire').attr('disabled', false)
   }
 })

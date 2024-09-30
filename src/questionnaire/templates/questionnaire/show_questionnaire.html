@@ -1,0 +1,49 @@
+{% extends 'sondage/base_html/main.html' %} {% block content %}
+
+<div class="page-heading">
+    <h6>Bienvenue! Nous sommes ravis de recueillir vos opinions et vous remercions à l'avance pour votre participation.</h6>
+</div>
+<div class="page-content">
+    <section class="row">
+        <div class="card" style="width:auto; min-width:100%; max-width:120%;">
+            <div id="titre_voirSondage" class=" card-header">
+            </div>
+            <div class="card-body">
+                <span id="data" class="all_data">
+                    <p id="lien"></p>
+                    <span class="data_infos">
+                        <input type="hidden" id="questionnaire_id" value="{{questionnaires.id}}" />
+                        <div class="form-group position-relative has-icon-left mb-0" style="width:30%">
+                            <input type="text"class="form-control form-control-xs text-center" name="nom"id="name" placeholder="Votre nom *" />
+                            <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                    </span>
+                      <br>
+                        <h6>{{questionnaires.titre}}</h6> <br>
+                        <i>{{questionnaires.commentaire}}</i> <br><br>
+                        <form class="form"  id="form" data-parsley-validate>
+                            <span class = "questions">
+                                {% for val in list_question %}
+                                    <p>{{val.question}}
+                                    {% if  val.obligatoire == 1 %} 
+                                            <span style="font-size: 10px;"> <i>(Obligatoire)</i></span>
+                                        {%endif%}    
+                                    </p>
+                                    <div>
+                                        <textarea name="{{val.id}}" id="{{val.id}}" placeholder="Reponse {% if val.obligatoire == 1 %}*{% endif %}" class="form-control {% if val.obligatoire == 1 %}obligatoire{% endif %}" data-parsley-required="true"></textarea>
+                                        <label id="{{val.id}}-error" class="validation-error-label"></label>
+                                    </div>  
+                                    <br><br>  
+                                {% endfor %} 
+                            </span>
+                            <input type="button" name="submit" class="btn btn-success" id="save_reponse" value="Enregistrer">
+                        </form>                  
+                </span>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

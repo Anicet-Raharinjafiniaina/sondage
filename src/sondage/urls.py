@@ -7,4 +7,5 @@ urlpatterns = [
     path('', include('user_auth.urls')),
     path('accueil/', accueil),
     path('vote/', include('vote.urls')),
+    path('questionnaire/', include('questionnaire.urls')),
 ]

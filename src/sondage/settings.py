@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user_auth',
     'sondage',
-    'vote'
+    'vote',
+    'questionnaire'
 ]
 
 MIDDLEWARE = [

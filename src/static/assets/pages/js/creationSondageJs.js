@@ -47,6 +47,7 @@ function reloadPage () {
 }
 
 $('#save').click(function () {
+  $('#save').attr('disabled', true)
   event.preventDefault()
   if ($('#titre').val() != '' && $("input[name='colonne1']").val() != '' && $("input[name='colonne2']").val() != '') {
     var dataInForm = $('#form').serializeArray()
@@ -65,6 +66,16 @@ $('#save').click(function () {
         $('#lien').html("<a href='/vote/show_sondage/" + encodeURIComponent(id) + "' > Afficher le sondage que vous venez de créer </a> ")
         $('#refresh').html('<button type="button " class="btn btn-sucess btn-sm" onclick="reloadPage()">Créer un autre sondage</button>')
         $('#titre_creation').text('')
+        $('#save').attr('disabled', true)
+      }, error: function (xhr, status, error) {
+        swal({
+          title: 'Erreur',
+          text: 'Erreur dans la base de données. Merci de réessayer plus tard.',
+          type: 'error',
+          timer: 3000,
+          showConfirmButton: false
+        })
+        $('#save').attr('disabled', false)
       }
     })
   } else {
@@ -75,5 +86,6 @@ $('#save').click(function () {
       timer: 3000,
       showConfirmButton: false
     })
+    $('#save').attr('disabled', false)
   }
 })

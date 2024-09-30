@@ -37,8 +37,8 @@ def save_sondage(request):
         except Exception as e:
             transaction.set_rollback(True)
             return JsonResponse({'message': str(e)}, status=400)
-        else:
-            return JsonResponse(data_vote.id, safe=False)
+    else:
+        return JsonResponse(data_vote.id, safe=False)
 
 
 def show_sondage(request, id):
@@ -168,3 +168,24 @@ def get_result_detail(vote_id):
 def get_titre_id(vote_id):
     return VoteDetail.objects.filter(
         vote__id=vote_id).values_list('id', flat=True).order_by("id")
+
+
+# def do_export(request):
+#     # Créer un classeur et une feuille
+#     wb = Workbook()
+#     ws = wb.active
+#     ws.title = "Products"
+
+#     # Ajouter les en-têtes
+#     ws.append(["Nom", "choix1", "choix2"])
+
+#     # Récupérer les données des produits
+#     products = Product.objects.all()
+#     for product in products:
+#         ws.append([product.id, product.name, product.price])
+
+#     # Préparer la réponse HTTP
+#     response = HttpResponse(content=wb.save(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+#     response['Content-Disposition'] = 'attachment; filename="products.xlsx"'
+    
+#     return response

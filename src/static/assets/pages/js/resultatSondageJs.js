@@ -24,6 +24,7 @@ $('#listSondage').on('change', function () {
       }
 
       $('#actif').on('change', function () {
+        $('#actif').attr('disabled', true)
         if ($('#actif').is(':checked')) {
           var txtActif = 'Activation'
           var valActif = 1
@@ -46,6 +47,7 @@ $('#listSondage').on('change', function () {
               timer: 3000,
               showConfirmButton: false
             })
+            $('#actif').attr('disabled', false)
           }
         })
       })

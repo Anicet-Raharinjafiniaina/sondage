@@ -1,0 +1,51 @@
+{% extends 'sondage/base_html/main.html' %} {% block content %}
+
+<div class="page-heading">
+    <h5>Résultat des questionnaires</h5>
+</div>
+<div class="page-content">
+    <section class="row">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+                    <select class="form-control" data-live-search="true" name="listSondage" id="listQuestionnaire" style="width:30%;">
+                        <option id ="0" value ="0">Séléctionner le questionnaire</option>
+                        {% for val in questionnaires %}
+                            <option id = "{{val.id}}" value= "{{val.id}}">{{val.titre}}</option>
+                        {% endfor %}
+                    </select>
+                </h4>
+                <div id="status">
+                    <i> Désactiver le lien &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; Nombre de personne qui ont participé &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; Lien du formulaire</i>
+                    <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+                        <span class="fa" style="margin-bottom:10px;"></span>&ensp; &ensp;
+                        <fieldset class="form-group">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="actif">
+                            </div>
+                        </fieldset>&ensp; &ensp;
+                        <span class="fa-fw select-all fas" style="margin-bottom:10px;"></span>
+                        &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; <span id="nb_pers"></span>
+                        &ensp;&ensp;&ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp;&ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp;&ensp; &ensp; <span id="lien_quest"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+    </section>
+
+    <section class="row">
+        <div class="card">
+            <div class="card-header">
+                <h4>
+
+                </h4>
+            </div>
+            <div class="card-body">
+                <p id="resultat"></p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

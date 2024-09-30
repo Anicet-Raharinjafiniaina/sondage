@@ -6,20 +6,18 @@ $(document).ready(function () {
   } else {
     localStorage.setItem(pageKey, 'true') // Sinon, marquez la page comme visitée
 */
-  $('#lien_vote').html('Lien du vote : <a href= ' + window.location.href + '>' + window.location.href + '<a>')
+  $('#lien_sondage').html('Lien du sondage : <a href= ' + window.location.href + '>' + window.location.href + '<a>')
   // var url_params = new URLSearchParams(window.location.search)
 
   $('#save_vote').click(function () {
+    $('#save_vote').attr('disabled', true)
     if (($('.radio_button').is(':checked')) || ($('#name').val() != '')) {
-      // var currentUrl = window.location.href
-      // var match = currentUrl.match(/\/(\d+)\/$/)
       $.ajax({
         url: '/vote/save_choice/',
         method: 'POST',
         data: {
           'choice': $.trim($('input[type=radio]:checked').val()),
           'name': $('#name').val(),
-        // 'id': match[1] // id se trouve dans le lien
         },
         success: function (msg) {
           swal({
@@ -31,6 +29,7 @@ $(document).ready(function () {
           })
           $('#data').text('Votre choix a été bien enregistré avec succés.')
           $('.page-heading').hide()
+          $('#save_vote').attr('disabled', false)
         },
         error: function (xhr, status, error) {
           swal({
@@ -40,6 +39,7 @@ $(document).ready(function () {
             timer: 3000,
             showConfirmButton: false
           })
+          $('#save_vote').attr('disabled', false)
         }
       })
     } else {
@@ -50,7 +50,7 @@ $(document).ready(function () {
         timer: 3000,
         showConfirmButton: false
       })
+      $('#save_vote').attr('disabled', false)
     }
   })
-// }
 })
