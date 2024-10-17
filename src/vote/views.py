@@ -168,24 +168,21 @@ def get_result_detail(vote_id):
 def get_titre_id(vote_id):
     return VoteDetail.objects.filter(
         vote__id=vote_id).values_list('id', flat=True).order_by("id")
-
-
-# def do_export(request):
-#     # Créer un classeur et une feuille
-#     wb = Workbook()
-#     ws = wb.active
-#     ws.title = "Products"
-
-#     # Ajouter les en-têtes
-#     ws.append(["Nom", "choix1", "choix2"])
-
-#     # Récupérer les données des produits
-#     products = Product.objects.all()
-#     for product in products:
-#         ws.append([product.id, product.name, product.price])
-
-#     # Préparer la réponse HTTP
-#     response = HttpResponse(content=wb.save(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-#     response['Content-Disposition'] = 'attachment; filename="products.xlsx"'
     
-#     return response
+@csrf_exempt   
+def checkName(request):
+    try:
+        if request.method == 'POST' :
+            data_post = request.POST.dict()  # Convertit QueryDict en dictionnaire Python
+            choice_id = data_post.get("id")
+            name = data_post.get("name")
+            id_detail = VoteDetail.objects.filter(id=choice_id).first() 
+            detail_objects = VoteDetail.objects.filter(vote_id=id_detail.vote_id)    
+            id_list = [value.id for value in detail_objects]
+            exists = VoteResult.objects.filter(vote_detail_id__in=id_list, nom__iexact=name).exists()    
+            if exists : 
+                return JsonResponse({"message": 1}, status=200)
+            else :
+                return JsonResponse({"message": 0}, status=200)
+    except Exception as e:
+        raise e    

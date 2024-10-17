@@ -11,7 +11,12 @@ $(document).ready(function () {
   
     $('#save_reponse').click(function () {
       var empty_val = getEmptyRequiredInputs()
-        if(empty_val == ""){
+      if( $('#name').val() ==""){
+        $('#name-error').text(" Ce Champ est obligatoire.");
+      }else{
+        $('#name-error').text("");
+      }
+        if(empty_val == "" && $('#name').val() !=""){
           data_infos = getData('.data_infos', 'input')
           questions = getData('.questions', 'input, textarea');
          

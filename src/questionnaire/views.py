@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
 from django.http import HttpResponseRedirect, JsonResponse
@@ -8,6 +8,8 @@ import re
 from sondage.utils import extraire_chiffre_fin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.serializers import serialize
+from django.urls import reverse
+from django.conf import settings
 
 def create_view(request):
     return render(request, 'questionnaire/create_view.html')

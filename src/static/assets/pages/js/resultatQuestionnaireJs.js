@@ -22,7 +22,7 @@ $(document).ready(function() {
                             $('#resultat').append("<b> - " + nom + "</b><br>");
                             for (const question in data.result.reponse[nom]) {
                                 $('#resultat').append("<i>" + question + "</i><br>");
-                                $('#resultat').append(" -> "+data.result.reponse[nom][question] + "<br>");
+                                $('#resultat').append(" -> "+ data.result.reponse[nom][question] + "<br>");                              
                            }
                            $('#resultat').append("-----------------------------------------------------------<br>");
                         }

@@ -12,12 +12,26 @@ $(document).ready(function () {
   $('#save_vote').click(function () {
     $('#save_vote').attr('disabled', true)
     if (($('.radio_button').is(':checked')) || ($('#name').val() != '')) {
+    var name = $('#name').val()
+    var id = $.trim($('input[type=radio]:checked').val())
+      chekNameVote(name, id).then(is_exist_name => {
+        console.log('is_exist_name => ' + is_exist_name);
+        if (is_exist_name == 1) {
+          swal({
+            title: 'Information',
+            text: 'Pour ce sondage, le nom ' + name + ' est déjà utilisé.',
+            type: 'warning',
+            timer: 3000,
+            showConfirmButton: false
+          });
+          return;
+        } else {          
       $.ajax({
         url: '/vote/save_choice/',
         method: 'POST',
         data: {
-          'choice': $.trim($('input[type=radio]:checked').val()),
-          'name': $('#name').val(),
+          'choice': id,
+          'name': name
         },
         success: function (msg) {
           swal({
@@ -42,6 +56,17 @@ $(document).ready(function () {
           $('#save_vote').attr('disabled', false)
         }
       })
+        }
+      }).catch(error => {
+        swal({
+          title: 'Erreur',
+          text: 'Erreur dans la base de données. Merci de réessayer plus tard.',
+          type: 'error',
+          timer: 3000,
+          showConfirmButton: false
+        })
+        $('#save_vote').attr('disabled', false)
+      });
     } else {
       swal({
         title: 'Information',
@@ -54,3 +79,31 @@ $(document).ready(function () {
     }
   })
 })
+
+function chekNameVote(name, id) {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: '/vote/checkName/',
+      method: 'POST',
+      data: {
+        name: name,
+        id: id
+      },
+      success: function (msg) {
+        $('#save_vote').attr('disabled', false)
+        resolve(msg.message);
+      },
+      error: function (xhr, status, error) {
+        swal({
+          title: 'Erreur',
+          text: 'Erreur dans la base de données. Merci de réessayer plus tard.',
+          type: 'error',
+          timer: 3000,
+          showConfirmButton: false
+        });
+        $('#save_vote').attr('disabled', false)
+        reject(error);
+      }
+    });
+  });
+}
