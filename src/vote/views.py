@@ -25,7 +25,7 @@ def save_sondage(request):
             # Filtrer les clés qui commencent par "colonne" ou "plus"
             filtered_data = {k: v for k, v in data.items() if k.startswith(
                 "colonne") or k.startswith("plus")}
-
+            
             for key, value in data.items():
                 if key.startswith('colonne'):
                     colonne_value = value

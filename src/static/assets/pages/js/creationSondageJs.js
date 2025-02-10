@@ -20,13 +20,16 @@ $('#check').click(function () {
   }
 })
 
-var i = 2
-var nbCol = 2
+var i = 3
+var nbCol = 3
 var req = 'data-parsley-required="true"'
 $('.colonne_list').attr('data-parsley-required="true"')
 $('#add').click(function () {
-  nbCol++
-  i++
+  var maxId = getMaxId();
+  console.log("Le chiffre maximum est : " + maxId);
+  i = maxId + 1; // Mettre à jour i pour le prochain ajout
+  nbCol = maxId + 1; 
+
   if ($('#check').is(':checked')) {
     var plus = '<input type="text" name="plus' + i + '" placeholder="plus de précision" id="other" class="form-control plus">'
   } else {
@@ -34,13 +37,39 @@ $('#add').click(function () {
   }
   $('#nbColonne').text('(nombre de choix ' + nbCol + ')')
   $('#dynamic_field').append('<tr id="row' + i + '"><td class="input-group-text"><input type="' + inputType + '" name="colonne' + i + '"  class="form-control colonne_list" placeholder="choix ' + i + ' *" ' + req + '/> ' + plus + '</td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">x</button></td></tr>')
-// $("input[name='colonne" + i + "']").attr('data-parsley-required="true"')
 })
+
+  function getMaxId() {
+    var maxId = 0;
+    $('#dynamic_field tbody tr td input[name^="colonne"]').each(function() {
+      var id = $(this).attr('name');
+      var num = parseInt(id.replace('colonne', ''), 10);
+      if (num > maxId) {
+        maxId = num;
+      }
+    });
+    return maxId;
+  }
 
 $(document).on('click', '.btn_remove', function () {
   var button_id = $(this).attr('id')
   $('#row' + button_id + '').remove()
+  setTimeout(function() {
+    renumberFields();
+  }, 500);
 })
+
+function renumberFields() {
+  var i = 1;
+  $('#dynamic_field tr').each(function() {
+    $(this).attr('id', 'row' + i);
+    $(this).find('input[name^="colonne"]').attr('name', 'colonne' + i).attr('id', 'colonne' + i).attr('placeholder', 'choix ' + i + ' *');
+    $(this).find('.btn_remove').attr('id', i);
+    i++;
+  });
+  nbCol = i - 1;
+  $('#nbColonne').text('(nombre de choix ' + nbCol + ')');
+}
 
 function reloadPage () {
   location.reload(true)
